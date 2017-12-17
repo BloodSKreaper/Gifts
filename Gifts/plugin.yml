@@ -1,0 +1,15 @@
+name: Gifts
+version: 1.0
+author: ChrisOchs
+
+main: me.chrisochs.gifts.Main
+commands:
+  gift:
+    description: null
+    usage: /<command>
+  acceptgift:
+    description: null
+    usage: /<command>
+  denygift:
+    description: null
+    usage: /<command>
