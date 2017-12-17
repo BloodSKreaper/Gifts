@@ -8,10 +8,14 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Main extends JavaPlugin{
+public class Main extends JavaPlugin implements Listener{
 	
 	private List<Gift> presents = new ArrayList<Gift>();
 	private String prefix = "§b~§a+§c-§b~§a+§c-§b~§a+§c-§b~§a+§c-§b~§a+§c-§b~§a+§c-Gifting-Plugin§c-§a+§b~§c-§a+§b~§c-§a+§b~§c-§a+§b~§c-§a+§b~§c-§a+§b~";
@@ -33,6 +37,8 @@ public class Main extends JavaPlugin{
 				}
 			}
 		}, 20L, 20L);
+		PluginManager manager = getServer().getPluginManager();
+	    manager.registerEvents(this, this);
 	}
 	public void onDisable(){
 		if(presents.size() > 0){
@@ -40,6 +46,18 @@ public class Main extends JavaPlugin{
 				addGiftToPlayerOrDropToGround(g, g.getSender());
 				presents.remove(g);
 			}
+		}
+	}
+	@EventHandler
+	public void onQuit(PlayerQuitEvent e){
+		if(playerIsSendingPresent(e.getPlayer())||getPendingGifts(e.getPlayer()).length()>1){
+			for(int i = 0; i<presents.size();i++){
+				if(presents.get(i).getReceiver() == e.getPlayer() || presents.get(i).getSender() == e.getPlayer()){
+					addGiftToPlayerOrDropToGround(presents.get(0), presents.get(0).getSender());
+					presents.remove(i);
+				}
+			}
+			
 		}
 	}
 	
