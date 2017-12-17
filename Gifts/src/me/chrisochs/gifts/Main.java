@@ -48,6 +48,8 @@ public class Main extends JavaPlugin implements Listener{
 			}
 		}
 	}
+	
+
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e){
 		if(playerIsSendingPresent(e.getPlayer())||getPendingGifts(e.getPlayer()).length()>1){
