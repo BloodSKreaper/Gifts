@@ -70,7 +70,7 @@ public class Main extends JavaPlugin implements Listener{
 			  sendPrefix(p);
 			  //Gift-Command
 			  if(cmd.getName().equalsIgnoreCase("gift")){
-				  if(args.length < 1 || args.length >1 || getServer().getPlayer(args[0])==null || p.getInventory().getItemInMainHand().getType() == Material.AIR || playerIsSendingPresent(p)){
+				  if(args.length < 1 || args.length >1 || getServer().getPlayer(args[0])==null || p.getInventory().getItemInMainHand().getType() == Material.AIR || playerIsSendingPresent(p)||getServer().getPlayer(args[0])== p){
 					  p.sendMessage("Command usage: /gift <PLAYERNAME>");
 					  if(args.length < 1){
 						  p.sendMessage("§cDu hast keinen Empfänger angegeben!");
@@ -80,8 +80,10 @@ public class Main extends JavaPlugin implements Listener{
 						  p.sendMessage("§cDer Spieler "+args[0]+" ist nicht online!");
 					  }else if(p.getInventory().getItemInMainHand().getType() == Material.AIR){
 						  p.sendMessage("§cDu hast kein Item zum Verschenken in der Hand!");
-					  }else{
+					  }else if(playerIsSendingPresent(p)){
 						  p.sendMessage("§cMomentan führst du bereits einen Schenkvorgang durch. Bitte warte, bis dieser abgeschlossen ist!");
+					  }else{
+						  p.sendMessage("§cDu kannst dir nicht selber ein Geschenk senden!");
 					  }
 				  }
 				  //Wenn alle Anforderungen erfüllt sind.
